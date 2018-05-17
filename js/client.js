@@ -193,9 +193,9 @@ var boardButtonCallback = function(t){
 };
 
 var cardButtonCallback = function(t, opts){
-  console.log(t, opts);
   const context = t.getContext();
-  const card = t.card(context.card);
+  const card = t.card();
+  console.log(card);
   card.due = new Date();
   // Trello Power-Up Popups are actually pretty powerful
   // Searching is a pretty common use case, so why reinvent the wheel
