@@ -206,8 +206,7 @@ var cardButtonCallback = function(t, opts){
               crossDomain: true,
               dataType: 'jsonp',
               error: function() { alert('Failed!'); },
-              beforeSend: setHeader
-              success: function(result) {
+              success: function() {
                   console.log("Trop de la balle ... by 3D !");
               }
           });
