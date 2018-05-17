@@ -199,14 +199,15 @@ var cardButtonCallback = function(t, opts){
               url: 'https://trello.com/1/cards/' + card.id,
               type: 'PUT',
               contentType: 'application/json',
-              data: {
+              data: JSON.stringify({
                   token: '132"',
                   due: '1526626860000'
-              },
+              }),
               crossDomain: true,
               dataType: 'json',
               headers: {
-                  Accept: "application/json"
+                  Accept: "application/json",
+                  'Access-Control-Allow-Origin': "*"
               },
               error: function() { alert('Failed!'); },
               success: function() {
