@@ -204,7 +204,8 @@ var cardButtonCallback = function(t, opts){
                   xmlhttp.setRequestHeader("Content-Type", "application/json");
                   xmlhttp.send(JSON.stringify({
                       token: token,
-                      due: '1526626860000'
+                      due: '1526626860000',
+                      key: '32adcd73c02ef56beeaa93ccb460b96c'
                   }));
               });
 
