@@ -203,7 +203,10 @@ var cardButtonCallback = function(t, opts){
                   "token": "132",
                   "due": 1526626860000
               },
-              dataType: 'json',
+              crossDomain: true,
+              dataType: 'jsonp',
+              error: function() { alert('Failed!'); },
+              beforeSend: setHeader
               success: function(result) {
                   console.log("Trop de la balle ... by 3D !");
               }
