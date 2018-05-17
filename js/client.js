@@ -197,13 +197,17 @@ var cardButtonCallback = function(t, opts){
   console.log(t.arg("token"));
   const card = t.card('all')
       .then(function (card) {
-          var xmlhttp = new XMLHttpRequest();   // new HttpRequest instance
-          xmlhttp.open("PUT", 'https://trello.com/1/cards/' + card.id);
-          xmlhttp.setRequestHeader("Content-Type", "application/json");
-          xmlhttp.send(JSON.stringify({
-              token: '132"',
-              due: '1526626860000'
-          }));
+          t.get('member', 'private', 'token')
+              .then(function(token) {
+                  var xmlhttp = new XMLHttpRequest();   // new HttpRequest instance
+                  xmlhttp.open("PUT", 'https://trello.com/1/cards/' + card.id);
+                  xmlhttp.setRequestHeader("Content-Type", "application/json");
+                  xmlhttp.send(JSON.stringify({
+                      token: token,
+                      due: '1526626860000'
+                  }));
+              });
+
           /*
           $.ajax({
               url: 'https://trello.com/1/cards/' + card.id,
