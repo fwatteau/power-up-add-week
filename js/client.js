@@ -199,10 +199,10 @@ var cardButtonCallback = function(t, opts){
               url: 'https://trello.com/1/cards/' + card.id,
               type: 'PUT',
               contentType: 'application/json',
-              data: {
+              data: JSON.stringify({
                   "token": "132",
                   "due": 1526626860000
-              },
+              }),
               crossDomain: true,
               dataType: 'jsonp',
               error: function() { alert('Failed!'); },
