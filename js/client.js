@@ -458,7 +458,6 @@ TrelloPowerUp.initialize({
     // For instance, if your Power-Up requires a token to be set for the member you could do the following:
     return t.get('member', 'private', 'token')
     .then(function(token){
-      console.log("token:" + token);
       if(token){
         return { authorized: true };
       }
