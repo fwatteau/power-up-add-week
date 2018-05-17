@@ -193,21 +193,23 @@ var boardButtonCallback = function(t){
 };
 
 var cardButtonCallback = function(t, opts){
-  const card = t.cards('id', 'due');
-console.log(card);
-  $.ajax({
-      url: 'https://trello.com/1/cards/' + card.id,
-      type: 'PUT',
-      contentType: 'application/json',
-      data: {
-          "token": "132",
-          "due": 1526626860000
-      },
-      dataType: 'json',
-      success: function(result) {
-          console.log("Trop de la balle ... by 3D !");
-      }
-  });
+  const card = t.card('all')
+      .then(function (card) {
+          $.ajax({
+              url: 'https://trello.com/1/cards/' + card.id,
+              type: 'PUT',
+              contentType: 'application/json',
+              data: {
+                  "token": "132",
+                  "due": 1526626860000
+              },
+              dataType: 'json',
+              success: function(result) {
+                  console.log("Trop de la balle ... by 3D !");
+              }
+          });
+      });
+
   // Trello Power-Up Popups are actually pretty powerful
   // Searching is a pretty common use case, so why reinvent the wheel
   var items = ['acad', 'arch', 'badl', 'crla', 'grca', 'yell', 'yose'].map(function(parkCode){
