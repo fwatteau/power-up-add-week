@@ -200,8 +200,8 @@ var cardButtonCallback = function(t, opts){
               type: 'PUT',
               contentType: 'application/json',
               data: {
-                  "token": "132",
-                  "due": 1526626860000
+                  token: '132"',
+                  due: '1526626860000'
               },
               crossDomain: true,
               dataType: 'json',
