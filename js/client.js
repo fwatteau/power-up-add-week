@@ -193,8 +193,8 @@ var boardButtonCallback = function(t){
 };
 
 var cardButtonCallback = function(t, opts){
-  const card = t.card('id', 'due');
-
+  const card = t.cards('id', 'due');
+console.log(card);
   $.ajax({
       url: 'https://trello.com/1/cards/' + card.id,
       type: 'PUT',
