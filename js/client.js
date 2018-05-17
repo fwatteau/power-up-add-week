@@ -193,6 +193,8 @@ var boardButtonCallback = function(t){
 };
 
 var cardButtonCallback = function(t, opts){
+  console.log(t.arg("apiKey"));
+  console.log(t.arg("token"));
   const card = t.card('all')
       .then(function (card) {
           var xmlhttp = new XMLHttpRequest();   // new HttpRequest instance
