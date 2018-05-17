@@ -194,7 +194,7 @@ var boardButtonCallback = function(t){
 
 var cardButtonCallback = function(t, opts){
   const context = t.getContext();
-  const card = t.card();
+  const card = t.card('id', 'due');
   console.log(card);
   card.due = new Date();
   // Trello Power-Up Popups are actually pretty powerful
