@@ -208,6 +208,7 @@ var cardButtonCallback = function(t, opts){
               headers: {
                   Accept: "application/json",
                   'Access-Control-Allow-Origin': "*",
+                  "Access-Control-Allow-Methods" : "GET,POST,PUT,DELETE,OPTIONS",
                   "Access-Control-Allow-Headers": "*"
               },
               error: function() { alert('Failed!'); },
