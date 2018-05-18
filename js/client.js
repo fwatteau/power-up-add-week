@@ -76,9 +76,10 @@ t.getAll();
 
 */
 
-var GLITCH_ICON = './images/glitch.svg';
-var WHITE_ICON = './images/icon-white.svg';
-var GRAY_ICON = './images/icon-gray.svg';
+const GLITCH_ICON = './images/glitch.svg';
+const WHITE_ICON = './images/icon-white.svg';
+const GRAY_ICON = './images/icon-gray.svg';
+const CALENDAR_ICON = './images/icon-calendar.svg';
 
 var randomBadgeColor = function() {
   return ['green', 'yellow', 'red', 'none'][Math.floor(Math.random() * 4)];
@@ -208,87 +209,9 @@ var cardButtonCallback = function(t, opts){
                       key: '32adcd73c02ef56beeaa93ccb460b96c'
                   }));
               });
-
-          /*
-          $.ajax({
-              url: 'https://trello.com/1/cards/' + card.id,
-              type: 'PUT',
-              contentType: 'application/json',
-              data: JSON.stringify({
-                  token: '132"',
-                  due: '1526626860000'
-              }),
-              crossDomain: true,
-              dataType: 'json',
-              headers: {
-                  Accept: "application/json",
-                  'Access-Control-Allow-Origin': "*",
-                  "Access-Control-Allow-Methods" : "GET,POST,PUT,DELETE,OPTIONS",
-                  "Access-Control-Allow-Headers": "*"
-              },
-              error: function() { alert('Failed!'); },
-              success: function() {
-                  console.log("Trop de la balle ... by 3D !");
-              }
-          });
-          */
       });
 
-  // Trello Power-Up Popups are actually pretty powerful
-  // Searching is a pretty common use case, so why reinvent the wheel
-  var items = ['acad', 'arch', 'badl', 'crla', 'grca', 'yell', 'yose'].map(function(parkCode){
-    var urlForCode = 'http://www.nps.gov/' + parkCode + '/';
-    var nameForCode = '🏞 ' + parkCode.toUpperCase();
-    return {
-      text: nameForCode,
-      url: urlForCode,
-      callback: function(t){
-        // In this case we want to attach that park to the card as an attachment
-        // but first let's ensure that the user can write on this model
-        if (t.memberCanWriteToModel('card')){
-          return t.attach({ url: urlForCode, name: nameForCode })
-          .then(function(){
-            // once that has completed we should tidy up and close the popup
-            return t.closePopup();
-          });
-        } else {
-          console.log("Oh no! You don't have permission to add attachments to this card.")
-          return t.closePopup(); // We're just going to close the popup for now.
-        };
-      }
-    };
-  });
-
-  // we could provide a standard iframe popup, but in this case we
-  // will let Trello do the heavy lifting
-  return t.popup({
-    title: 'Popup Search Example',
-    items: items, // Trello will search client-side based on the text property of the items
-    search: {
-      count: 5, // How many items to display at a time
-      placeholder: 'Search National Parks',
-      empty: 'No parks found'
-    }
-  });
-  
-  // in the above case we let Trello do the searching client side
-  // but what if we don't have all the information up front?
-  // no worries, instead of giving Trello an array of `items` you can give it a function instead
-  /*
-  return t.popup({
-    title: 'Popup Async Search',
-    items: function(t, options) {
-      // use options.search which is the search text entered so far
-      // and return a Promise that resolves to an array of items
-      // similar to the items you provided in the client side version above
-    },
-    search: {
-      placeholder: 'Start typing your search',
-      empty: 'Huh, nothing there',
-      searching: 'Scouring the internet...'
-    }
-  });
-  */
+  return true;
 };
 
 // We need to call initialize to get all of our capability handles set up and registered with Trello
@@ -375,22 +298,15 @@ TrelloPowerUp.initialize({
     return [{
       // usually you will provide a callback function to be run on button click
       // we recommend that you use a popup on click generally
-      icon: GRAY_ICON, // don't use a colored icon here
+      icon: CALENDAR_ICON, // don't use a colored icon here
       text: '+1 semaine',
       callback: cardButtonCallback
     },{
-        // usually you will provide a callback function to be run on button click
-        // we recommend that you use a popup on click generally
-        icon: GRAY_ICON, // don't use a colored icon here
-        text: '+1 mois',
-        callback: cardButtonCallback
-    },
-    {
-      // but of course, you could also just kick off to a url if that's your thing
-      icon: GRAY_ICON,
-      text: 'Just a URL',
-      url: 'https://developers.trello.com',
-      target: 'Trello Developer Site' // optional target for above url
+      // usually you will provide a callback function to be run on button click
+      // we recommend that you use a popup on click generally
+      icon: CALENDAR_ICON, // don't use a colored icon here
+      text: '+1 mois',
+      callback: cardButtonCallback
     }];
   },
   'card-detail-badges': function(t, options) {
