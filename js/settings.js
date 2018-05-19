@@ -30,8 +30,9 @@ t.lists('id', 'name')
   });
 
 document.getElementById('save').addEventListener('click', function(){
-    console.log(listSelector.value, 'saved');
-  return t.set('board', 'shared', 'list', listSelector.value)
+  const values = [...listSelector.options].filter(option => option.selected).map(option => option.value);
+  console.log(values, 'saved');
+  return t.set('board', 'shared', 'list', values)
     .then(function(){
       t.closePopup();
     })
