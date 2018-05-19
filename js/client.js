@@ -2,7 +2,6 @@
 
 // we can access Bluebird Promises as follows
 var Promise = TrelloPowerUp.Promise;
-var GLOBAL_API_KEY = "$TRELLO_API_KEY";
 /*
 
 Trello Data Access
@@ -193,25 +192,26 @@ var boardButtonCallback = function(t){
   });
 };
 
-var cardButtonCallback = function(t, opts){
-  console.log(moment().day(12).hour(9).minute(0).format("dddd, MMMM Do YYYY, h:mm:ss"));
-  console.log(t.arg("token"));
-  const card = t.card('all')
-      .then(function (card) {
-          t.get('member', 'private', 'token')
-              .then(function(token) {
-                  var xmlhttp = new XMLHttpRequest();   // new HttpRequest instance
-                  xmlhttp.open("PUT", 'https://trello.com/1/cards/' + card.id);
-                  xmlhttp.setRequestHeader("Content-Type", "application/json");
-                  xmlhttp.send(JSON.stringify({
-                      token: token,
-                      due: '1526626860000',
-                      key: '32adcd73c02ef56beeaa93ccb460b96c'
-                  }));
-              });
-      });
+const cardButtonCallback = function (t, opts) {
+    var nextFriday = moment().day(12).hour(9).minute(0);
+    console.log(moment().day(12).hour(9).minute(0).format("dddd, MMMM Do YYYY, h:mm:ss"));
+    console.log('${process.env.TRELLO_API_KEY}');
+    const card = t.card('all')
+        .then(function (card) {
+            t.get('member', 'private', 'token')
+                .then(function (token) {
+                    var xmlhttp = new XMLHttpRequest();   // new HttpRequest instance
+                    xmlhttp.open("PUT", 'https://trello.com/1/cards/' + card.id);
+                    xmlhttp.setRequestHeader("Content-Type", "application/json");
+                    xmlhttp.send(JSON.stringify({
+                        token: token,
+                        due: nextFriday.valueOf(),
+                        key: '32adcd73c02ef56beeaa93ccb460b96c'
+                    }));
+                });
+        });
 
-  return true;
+    return true;
 };
 
 // We need to call initialize to get all of our capability handles set up and registered with Trello
@@ -387,6 +387,7 @@ TrelloPowerUp.initialize({
     
     // If we want to ask the user to authorize our Power-Up to make full use of the Trello API
     // you'll need to add your API from trello.com/app-key below:
+    const trelloAPIKey = "$TRELLO_API_KEY";
 
     // This key will be used to generate a token that you can pass along with the API key to Trello's
     // RESTful API. Using the key/token pair, you can make requests on behalf of the authorized user.
@@ -395,7 +396,7 @@ TrelloPowerUp.initialize({
     if (trelloAPIKey) {
       return t.popup({
         title: 'My Auth Popup',
-        args: { apiKey: GLOBAL_API_KEY }, // Pass in API key to the iframe
+        args: { apiKey: trelloAPIKey }, // Pass in API key to the iframe
         url: './authorize.html', // Check out public/authorize.html to see how to ask a user to auth
         height: 140,
       });
