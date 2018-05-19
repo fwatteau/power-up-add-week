@@ -15,10 +15,13 @@ t.lists('id', 'name')
 //      t.render(function () {
       return t.get('board', 'shared', 'list')
           .then(function (savedList) {
-              console.log(savedList);
-              if (savedList) {
-                  listSelector.value = savedList;
-              }
+              lists.forEach(function(list) {
+                  const opt = document.createElement('option');
+                  opt.value = list.id;
+                  opt.innerHTML = list.name;
+                  opt.selected = savedList.includes(list.id);
+                  listSelector.appendChild(opt);
+              });
               t.sizeTo('#content')
                   .done();
           });
