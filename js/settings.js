@@ -1,6 +1,5 @@
 /* global TrelloPowerUp */
 
-const Promise = TrelloPowerUp.Promise;
 const t = TrelloPowerUp.iframe();
 
 const listSelector = document.getElementById('list');
@@ -14,16 +13,12 @@ t.lists('id', 'name')
           listSelector.appendChild(opt);
       });
       t.render(function () {
-          return Promise.all([
-              t.get('board', 'shared', 'list')
-          ])
-              .spread(function (savedList) {
+          return t.get('board', 'shared', 'list')
+              .then(function (savedList) {
                   console.log(savedList);
                   if (savedList) {
                       listSelector.value = savedList;
                   }
-              })
-              .then(function () {
                   t.sizeTo('#content')
                       .done();
               })
