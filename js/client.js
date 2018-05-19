@@ -1,7 +1,7 @@
 /* global TrelloPowerUp */
 
 // we can access Bluebird Promises as follows
-// var Promise = TrelloPowerUp.Promise;
+var Promise = TrelloPowerUp.Promise;
 const t = TrelloPowerUp.iframe();
 /*
 
@@ -144,7 +144,8 @@ TrelloPowerUp.initialize({
             callback: cardButtonOneMonthCallback
         }];
 
-        return [...arr1, ...arr2];
+        // return [...arr1, ...arr2];
+        return arr1;
     },
     'show-settings': function(t){
         // when a user clicks the gear icon by your Power-Up in the Power-Ups menu
