@@ -76,6 +76,7 @@ t.getAll();
 */
 
 const CALENDAR_ICON = './images/icon-calendar.svg';
+const GO_ICON = 'https://butlerfortrello.com/powerup/1526409456/img/powerup-gray/thumbs-up.svg?color=999';
 
 const cardButtonOneWeekCallback = function (t, opts) {
     cardButtonCallback(t, opts, 1);
@@ -168,7 +169,7 @@ TrelloPowerUp.initialize({
     
     // If we want to ask the user to authorize our Power-Up to make full use of the Trello API
     // you'll need to add your API from trello.com/app-key below:
-    const trelloAPIKey = "$process.env.TRELLO_API_KEY";
+    const trelloAPIKey = process.env.TRELLO_API_KEY;
 
     // This key will be used to generate a token that you can pass along with the API key to Trello's
     // RESTful API. Using the key/token pair, you can make requests on behalf of the authorized user.
