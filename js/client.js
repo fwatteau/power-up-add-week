@@ -1,8 +1,8 @@
 /* global TrelloPowerUp */
 
 // we can access Bluebird Promises as follows
-var Promise = TrelloPowerUp.Promise;
-const t = TrelloPowerUp.iframe();
+// var Promise = TrelloPowerUp.Promise;
+// const t = TrelloPowerUp.iframe();
 /*
 
 Trello Data Access
@@ -110,7 +110,7 @@ const cardButtonCallback = function (t, opts, weekNumber) {
 
     return true;
 };
-
+/*
 const cardButtonMoovCallback = function (t, opts) {
     console.log(opts);
 };
@@ -125,7 +125,7 @@ t.get('board', 'shared', 'list', [])
                 list: list
             });
         });
-});
+});*/
 
 // We need to call initialize to get all of our capability handles set up and registered with Trello
 TrelloPowerUp.initialize({
