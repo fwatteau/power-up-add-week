@@ -5,9 +5,14 @@ const t = TrelloPowerUp.iframe();
 
 const listSelector = document.getElementById('list');
 
-t.lists('all')
+t.lists('id', 'name')
   .then(function (lists) {
-      console.log(JSON.stringify(lists, null, 2));
+      lists.forEach(function(list) {
+          const opt = document.createElement('option');
+          opt.value = list.id;
+          opt.innerHTML = list.name;
+          listSelector.appendChild(opt);
+      });
       t.render(function () {
           return Promise.all([
               t.get('board', 'shared', 'list')
