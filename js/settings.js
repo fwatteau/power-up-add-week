@@ -12,17 +12,17 @@ t.lists('id', 'name')
           opt.innerHTML = list.name;
           listSelector.appendChild(opt);
       });
-      t.render(function () {
-          return t.get('board', 'shared', 'list')
-              .then(function (savedList) {
-                  console.log(savedList);
-                  if (savedList) {
-                      listSelector.value = savedList;
-                  }
-                  t.sizeTo('#content')
-                      .done();
-              })
-      });
+//      t.render(function () {
+      return t.get('board', 'shared', 'list')
+          .then(function (savedList) {
+              console.log(savedList);
+              if (savedList) {
+                  listSelector.value = savedList;
+              }
+              t.sizeTo('#content')
+                  .done();
+          });
+//      });
   });
 
 document.getElementById('save').addEventListener('click', function(){
