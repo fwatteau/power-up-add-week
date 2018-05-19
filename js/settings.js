@@ -6,13 +6,6 @@ const listSelector = document.getElementById('list');
 
 t.lists('id', 'name')
   .then(function (lists) {
-      lists.forEach(function(list) {
-          const opt = document.createElement('option');
-          opt.value = list.id;
-          opt.innerHTML = list.name;
-          listSelector.appendChild(opt);
-      });
-//      t.render(function () {
       return t.get('board', 'shared', 'list')
           .then(function (savedList) {
               lists.forEach(function(list) {
@@ -25,7 +18,6 @@ t.lists('id', 'name')
               t.sizeTo('#content')
                   .done();
           });
-//      });
   });
 
 document.getElementById('save').addEventListener('click', function(){
