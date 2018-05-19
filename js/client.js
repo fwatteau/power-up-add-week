@@ -78,6 +78,8 @@ t.getAll();
 const CALENDAR_ICON = './images/icon-calendar.svg';
 const GO_ICON = 'https://butlerfortrello.com/powerup/1526409456/img/powerup-gray/thumbs-up.svg?color=999';
 
+let arr2 = [];
+
 const cardButtonOneWeekCallback = function (t, opts) {
     cardButtonCallback(t, opts, 1);
 };
@@ -108,84 +110,101 @@ const cardButtonCallback = function (t, opts, weekNumber) {
     return true;
 };
 
-// We need to call initialize to get all of our capability handles set up and registered with Trello
-TrelloPowerUp.initialize({
-  'card-buttons': function() {
-    return [{
-      // usually you will provide a callback function to be run on button click
-      // we recommend that you use a popup on click generally
-      icon: CALENDAR_ICON, // don't use a colored icon here
-      text: '+1 semaine',
-      callback: cardButtonOneWeekCallback
-    },{
-      // usually you will provide a callback function to be run on button click
-      // we recommend that you use a popup on click generally
-      icon: CALENDAR_ICON, // don't use a colored icon here
-      text: '+1 mois',
-      callback: cardButtonOneMonthCallback
-    }];
-  },
-  'show-settings': function(t){
-    // when a user clicks the gear icon by your Power-Up in the Power-Ups menu
-    // what should Trello show. We highly recommend the popup in this case as
-    // it is the least disruptive, and fits in well with the rest of Trello's UX
-    return t.popup({
-      title: 'Settings',
-      url: './settings.html',
-      height: 184 // we can always resize later, but if we know the size in advance, its good to tell Trello
-    });
-  },
-  
-  /*        
-      
-      🔑 Authorization Capabiltiies 🗝
-      
-      The following two capabilities should be used together to determine:
-      1. whether a user is appropriately authorized
-      2. what to do when a user isn't completely authorized
-      
-  */
-  'authorization-status': function(t){
-    // Return a promise that resolves to an object with a boolean property 'authorized' of true or false
-    // The boolean value determines whether your Power-Up considers the user to be authorized or not.
-    
-    // When the value is false, Trello will show the user an "Authorize Account" options when
-    // they click on the Power-Up's gear icon in the settings. The 'show-authorization' capability
-    // below determines what should happen when the user clicks "Authorize Account"
-    
-    // For instance, if your Power-Up requires a token to be set for the member you could do the following:
-    return t.get('member', 'private', 'token')
-    .then(function(token){
-      if(token){
-        return { authorized: true };
-      }
-      return { authorized: false };
-    });
-    // You can also return the object synchronously if you know the answer synchronously.
-  },
-  'show-authorization': function(t){
-    // Returns what to do when a user clicks the 'Authorize Account' link from the Power-Up gear icon
-    // which shows when 'authorization-status' returns { authorized: false }.
-    
-    // If we want to ask the user to authorize our Power-Up to make full use of the Trello API
-    // you'll need to add your API from trello.com/app-key below:
-    const trelloAPIKey = TRELLO_API_KEY;
+const cardButtonMoovCallback = function (t, opts) {
+    console.log(opts);
+};
 
-    // This key will be used to generate a token that you can pass along with the API key to Trello's
-    // RESTful API. Using the key/token pair, you can make requests on behalf of the authorized user.
-    
-    // In this case we'll open a popup to kick off the authorization flow.
-    if (trelloAPIKey) {
-      return t.popup({
-        title: 'My Auth Popup',
-        args: { apiKey: trelloAPIKey }, // Pass in API key to the iframe
-        url: './authorize.html', // Check out public/authorize.html to see how to ask a user to auth
-        height: 140,
-      });
-    } else {
-      console.log("🙈 Looks like you need to add your API key to the project!");
-    }
-  }
+t.get('board', 'shared', 'list', [])
+    .then(function (savedList) {
+        savedList.forEach(function (list) {
+            arr2.push({
+                icon: GO_ICON, // don't use a colored icon here
+                text: 'Moov',
+                callback: cardButtonMoovCallback,
+                list: list
+            });
+        });
+
+        // We need to call initialize to get all of our capability handles set up and registered with Trello
+        TrelloPowerUp.initialize({
+          'card-buttons': function () {
+              const arr1 = [{
+                  // usually you will provide a callback function to be run on button click
+                  // we recommend that you use a popup on click generally
+                  icon: CALENDAR_ICON, // don't use a colored icon here
+                  text: '+1 semaine',
+                  callback: cardButtonOneWeekCallback
+              }, {
+                  // usually you will provide a callback function to be run on button click
+                  // we recommend that you use a popup on click generally
+                  icon: CALENDAR_ICON, // don't use a colored icon here
+                  text: '+1 mois',
+                  callback: cardButtonOneMonthCallback
+              }];
+
+              return [...arr1, ...arr2];
+          },
+          'show-settings': function(t){
+            // when a user clicks the gear icon by your Power-Up in the Power-Ups menu
+            // what should Trello show. We highly recommend the popup in this case as
+            // it is the least disruptive, and fits in well with the rest of Trello's UX
+            return t.popup({
+              title: 'Settings',
+              url: './settings.html',
+              height: 184 // we can always resize later, but if we know the size in advance, its good to tell Trello
+            });
+          },
+
+          /*
+
+              🔑 Authorization Capabiltiies 🗝
+
+              The following two capabilities should be used together to determine:
+              1. whether a user is appropriately authorized
+              2. what to do when a user isn't completely authorized
+
+          */
+          'authorization-status': function(t){
+            // Return a promise that resolves to an object with a boolean property 'authorized' of true or false
+            // The boolean value determines whether your Power-Up considers the user to be authorized or not.
+
+            // When the value is false, Trello will show the user an "Authorize Account" options when
+            // they click on the Power-Up's gear icon in the settings. The 'show-authorization' capability
+            // below determines what should happen when the user clicks "Authorize Account"
+
+            // For instance, if your Power-Up requires a token to be set for the member you could do the following:
+            return t.get('member', 'private', 'token')
+            .then(function(token){
+              if(token){
+                return { authorized: true };
+              }
+              return { authorized: false };
+            });
+            // You can also return the object synchronously if you know the answer synchronously.
+          },
+          'show-authorization': function(t){
+            // Returns what to do when a user clicks the 'Authorize Account' link from the Power-Up gear icon
+            // which shows when 'authorization-status' returns { authorized: false }.
+
+            // If we want to ask the user to authorize our Power-Up to make full use of the Trello API
+            // you'll need to add your API from trello.com/app-key below:
+            const trelloAPIKey = TRELLO_API_KEY;
+
+            // This key will be used to generate a token that you can pass along with the API key to Trello's
+            // RESTful API. Using the key/token pair, you can make requests on behalf of the authorized user.
+
+            // In this case we'll open a popup to kick off the authorization flow.
+            if (trelloAPIKey) {
+              return t.popup({
+                title: 'My Auth Popup',
+                args: { apiKey: trelloAPIKey }, // Pass in API key to the iframe
+                url: './authorize.html', // Check out public/authorize.html to see how to ask a user to auth
+                height: 140,
+              });
+            } else {
+              console.log("🙈 Looks like you need to add your API key to the project!");
+            }
+          }
+        });
 });
-
 console.log('Loaded by: ' + document.referrer);
