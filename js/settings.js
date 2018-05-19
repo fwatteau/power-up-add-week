@@ -18,6 +18,7 @@ t.lists('id', 'name')
               t.get('board', 'shared', 'list')
           ])
               .spread(function (savedList) {
+                  console.log(savedList);
                   if (savedList) {
                       listSelector.value = savedList;
                   }
