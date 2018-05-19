@@ -1,36 +1,32 @@
 /* global TrelloPowerUp */
 
-var Promise = TrelloPowerUp.Promise;
-var t = TrelloPowerUp.iframe();
+const Promise = TrelloPowerUp.Promise;
+const t = TrelloPowerUp.iframe();
 
-var fruitSelector = document.getElementById('fruit');
-var vegetableSelector = document.getElementById('vegetable');
+const listSelector = document.getElementById('list');
 
-t.render(function(){
-  return Promise.all([
-    t.get('board', 'shared', 'fruit'),
-    t.get('board', 'private', 'vegetable')
-  ])
-  .spread(function(savedFruit, savedVegetable){
-    if(savedFruit && /[a-z]+/.test(savedFruit)){
-      fruitSelector.value = savedFruit;
-    }
-    if(savedVegetable && /[a-z]+/.test(savedVegetable)){
-      vegetableSelector.value = savedVegetable;
-    }
-  })
-  .then(function(){
-    t.sizeTo('#content')
-    .done();
-  })
-});
+t.lists('all')
+  .then(function (lists) {
+      console.log(JSON.stringify(lists, null, 2));
+      t.render(function () {
+          return Promise.all([
+              t.get('board', 'shared', 'list')
+          ])
+              .spread(function (savedList) {
+                  if (savedList) {
+                      listSelector.value = savedList;
+                  }
+              })
+              .then(function () {
+                  t.sizeTo('#content')
+                      .done();
+              })
+      });
+  });
 
 document.getElementById('save').addEventListener('click', function(){
-  return t.set('board', 'private', 'vegetable', vegetableSelector.value)
-  .then(function(){
-    return t.set('board', 'shared', 'fruit', fruitSelector.value);
-  })
-  .then(function(){
-    t.closePopup();
-  })
-})
+  return t.set('board', 'shared', 'list', listSelector.value)
+    .then(function(){
+      t.closePopup();
+    })
+});
