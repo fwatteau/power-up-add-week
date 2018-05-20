@@ -183,7 +183,7 @@ TrelloPowerUp.initialize({
                             // its best to use static badges unless you need your badges
                             // to refresh you can mix and match between static and dynamic
                             title: 'Nb report',
-                            text: context[0],
+                            text: nbRepeat,
                             color: color
                         }];
                     })
