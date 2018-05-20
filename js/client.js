@@ -134,7 +134,7 @@ t.get('board', 'shared', 'list', [])
 // We need to call initialize to get all of our capability handles set up and registered with Trello
 TrelloPowerUp.initialize({
     'card-buttons': function () {
-        const arr1 = [{
+        let arr1 = [{
             // usually you will provide a callback function to be run on button click
             // we recommend that you use a popup on click generally
             icon: CALENDAR_ICON, // don't use a colored icon here
@@ -148,7 +148,19 @@ TrelloPowerUp.initialize({
             callback: cardButtonOneMonthCallback
         }];
 
-        return [...arr1, ...arr2];
+        return t.get('board', 'shared', 'list', [])
+            .then(function (savedList) {
+                    savedList.forEach(function (list) {
+                        arr1.push({
+                            icon: GO_ICON, // don't use a colored icon here
+                            text: 'Moov',
+                            callback: cardButtonMoovCallback,
+                            list: list
+                        });
+                    });
+                    return arr1;
+
+            });
     },
     'show-settings': function(t){
         // when a user clicks the gear icon by your Power-Up in the Power-Ups menu
