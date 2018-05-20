@@ -114,11 +114,11 @@ const cardButtonCallback = function (t, opts, weekNumber) {
 
     return true;
 };
-/*
+
 const cardButtonMoovCallback = function (t, opts) {
     console.log(opts);
 };
-
+/*
 t.get('board', 'shared', 'list', [])
     .then(function (savedList) {
         savedList.forEach(function (list) {
