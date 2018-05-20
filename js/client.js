@@ -162,9 +162,9 @@ TrelloPowerUp.initialize({
     },
     'card-detail-badges': function (t, opts) {
         return t.card('id')
-            .then(function(cardId){
+            .then(function(card){
                 return Promise.all([
-                    t.get(cardId, 'shared', 'mel-moov', 0)
+                    t.get(card.id, 'shared', 'mel-moov', 0)
                 ])
                     .then(function(context) {
                         const nbRepeat = context[0];
