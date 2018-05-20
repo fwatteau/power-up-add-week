@@ -160,7 +160,30 @@ TrelloPowerUp.initialize({
             height: 184 // we can always resize later, but if we know the size in advance, its good to tell Trello
         });
     },
-
+    'card-detail-badges': function (t, opts) {
+        return t.card('id')
+            .then(function(cardId){
+                return Promise.all([
+                    t.get(cardId, 'shared', 'mel-moov', 0)
+                ])
+                    .then(function(context) {
+                        const nbRepeat = context[0];
+                        let color = 'red';
+                        if (nbRepeat < 4) {
+                            color = 'green';
+                        } else if (nbRepeat < 8) {
+                            color = 'orange';
+                        }
+                        return [{
+                            // its best to use static badges unless you need your badges
+                            // to refresh you can mix and match between static and dynamic
+                            title: 'Nb report',
+                            text: context[0],
+                            color: color
+                        }];
+                    })
+            });
+    },
     /*
 
         🔑 Authorization Capabiltiies 🗝
