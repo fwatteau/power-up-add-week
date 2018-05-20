@@ -116,7 +116,7 @@ const cardButtonCallback = function (t, opts, weekNumber) {
 };
 
 const cardButtonMoovCallback = function (t, opts) {
-    console.log(opts);
+    console.log(t.list('id', 'name'), t.card('id', 'name'));
 };
 /*
 t.get('board', 'shared', 'list', [])
@@ -150,16 +150,16 @@ TrelloPowerUp.initialize({
 
         return t.get('board', 'shared', 'list', [])
             .then(function (savedList) {
-                    savedList.forEach(function (list) {
-                        arr1.push({
-                            icon: GO_ICON, // don't use a colored icon here
-                            text: 'Moov',
-                            callback: cardButtonMoovCallback,
-                            list: list
-                        });
+                console.log(t.list('id', 'name'));
+                savedList.forEach(function (list) {
+                    arr1.push({
+                        icon: GO_ICON, // don't use a colored icon here
+                        text: 'Moov',
+                        callback: cardButtonMoovCallback,
+                        list: list
                     });
-                    return arr1;
-
+                });
+                return arr1;
             });
     },
     'show-settings': function(t){
