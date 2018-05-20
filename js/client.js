@@ -91,9 +91,8 @@ const cardButtonOneMonthCallback = function (t, opts) {
 
 const cardButtonCallback = function (t, opts, weekNumber) {
     const nextFriday = moment().day(5 + weekNumber * 7).hour(9).minute(0);
-    console.log(moment().day(12).hour(9).minute(0).format("dddd, MMMM Do YYYY, h:mm:ss"));
-    console.log('${process.env.TRELLO_API_KEY}');
-    t.card('all')
+
+    t.card('id')
         .then(function (card) {
             t.get('member', 'private', 'token')
                 .then(function (token) {
@@ -105,6 +104,11 @@ const cardButtonCallback = function (t, opts, weekNumber) {
                         due: nextFriday.valueOf(),
                         key: TRELLO_API_KEY
                     }));
+                    // Store nb moov
+                    t.get(card.id, 'shared', 'mel-moov', 0)
+                        .then(function(moov) {
+                            t.set(card.id, 'shared', 'mel-moov', moov + 1);
+                        });
                 });
         });
 
@@ -205,6 +209,7 @@ TrelloPowerUp.initialize({
             });
         } else {
             console.log("🙈 Looks like you need to add your API key to the project!");
+            window.alert("🙈 Il faut autoriser le power up a utiliser ton compte ! (Va dans les paramètres)")
         }
     }
 });
