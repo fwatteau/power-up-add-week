@@ -89,10 +89,10 @@ const cardButtonOneMonthCallback = function (t, opts) {
     cardButtonCallback(t, opts, 4);
 };
 
-const cardButtonCallback = function (t, opts, weekNumber) {
+const cardButtonCallback = function (t, opts, weekNumber, list) {
     const nextFriday = moment().day(5 + weekNumber * 7).hour(9).minute(0);
 
-    t.card('id')
+    t.card('id', 'idList')
         .then(function (card) {
             t.get('member', 'private', 'token')
                 .then(function (token) {
@@ -102,6 +102,7 @@ const cardButtonCallback = function (t, opts, weekNumber) {
                     xmlhttp.send(JSON.stringify({
                         token: token,
                         due: nextFriday.valueOf(),
+                        idList: list ? list : card.idList,
                         key: TRELLO_API_KEY
                     }));
                     // Store nb moov
@@ -111,25 +112,7 @@ const cardButtonCallback = function (t, opts, weekNumber) {
                         });
                 });
         });
-
-    return true;
 };
-
-const cardButtonMoovCallback = function (t, opts) {
-    console.log(t.list('id', 'name'), t.card('id', 'name'));
-};
-/*
-t.get('board', 'shared', 'list', [])
-    .then(function (savedList) {
-        savedList.forEach(function (list) {
-            arr2.push({
-                icon: GO_ICON, // don't use a colored icon here
-                text: 'Moov',
-                callback: cardButtonMoovCallback,
-                list: list
-            });
-        });
-});*/
 
 // We need to call initialize to get all of our capability handles set up and registered with Trello
 TrelloPowerUp.initialize({
@@ -150,23 +133,26 @@ TrelloPowerUp.initialize({
 
         return Promise.all([
             t.lists('id', 'name'),
-            t.get('board', 'shared', 'list', [])
+            t.get('board', 'shared', 'list', []),
+            t.list('id', 'name')
         ])
             .then(function (context) {
                 const lists = context[0];
                 const savedList = context[1];
-                console.log(t.list('id', 'name'));
-                savedList.forEach(function (savedList) {
-                    const label = [...lists].filter(list => list.id === savedList).map(list => list.name);
-                    arr1.push({
-                        icon: GO_ICON, // don't use a colored icon here
-                        text: 'Moov ' + label[0],
-                        callback: function (t, opts) {
-                            console.log(savedList);
-                        },
-                        list: savedList
+                const list = context[2];
+                if (list.name === "New") {
+                    savedList.forEach(function (savedList) {
+                        const label = [...lists].filter(list => list.id === savedList).map(list => list.name);
+                        arr1.push({
+                            icon: GO_ICON, // don't use a colored icon here
+                            text: 'Moov ' + label[0],
+                            callback: function (t, opts) {
+                                cardButtonCallback(t, opts, 1, savedList);
+                            },
+                            list: savedList
+                        });
                     });
-                });
+                }
                 return arr1;
             });
     },
