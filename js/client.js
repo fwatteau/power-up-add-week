@@ -175,13 +175,13 @@ TrelloPowerUp.initialize({
     'card-detail-badges': function (t, opts) {
         return t.card('id')
             .then(function(card){
-                return Promise.all([
-                    t.get(card.id, 'shared', 'mel-moov', 0)
-                ])
+                return t.get(card.id, 'shared', 'mel-moov', 0)
                     .then(function(context) {
                         const nbRepeat = context[0];
                         let color = 'red';
-                        if (nbRepeat < 4) {
+                        if (nbRepeat  == 0) {
+                            return [];
+                        } else if (nbRepeat < 4) {
                             color = 'green';
                         } else if (nbRepeat < 8) {
                             color = 'orange';
