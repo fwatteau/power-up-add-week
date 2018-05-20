@@ -148,15 +148,23 @@ TrelloPowerUp.initialize({
             callback: cardButtonOneMonthCallback
         }];
 
-        return t.get('board', 'shared', 'list', [])
-            .then(function (savedList) {
+        return Promise.all([
+            t.lists('id', 'name'),
+            t.get('board', 'shared', 'list', [])
+        ])
+            .then(function (context) {
+                const lists = context[0];
+                const savedList = context[1];
                 console.log(t.list('id', 'name'));
-                savedList.forEach(function (list) {
+                savedList.forEach(function (savedList) {
+                    const label = [...lists].filter(list => list.id === savedList).map(list => list.name);
                     arr1.push({
                         icon: GO_ICON, // don't use a colored icon here
-                        text: 'Moov',
-                        callback: cardButtonMoovCallback,
-                        list: list
+                        text: 'Moov ' + label[0],
+                        callback: function (t, opts) {
+                            console.log(savedList);
+                        },
+                        list: savedList
                     });
                 });
                 return arr1;
