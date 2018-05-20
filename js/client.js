@@ -176,10 +176,9 @@ TrelloPowerUp.initialize({
         return t.card('id')
             .then(function(card){
                 return t.get(card.id, 'shared', 'mel-moov', 0)
-                    .then(function(context) {
-                        const nbRepeat = context[0];
+                    .then(function(nbRepeat) {
                         let color = 'red';
-                        if (nbRepeat  == 0) {
+                        if (nbRepeat  === 0) {
                             return [];
                         } else if (nbRepeat < 4) {
                             color = 'green';
