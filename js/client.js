@@ -133,7 +133,7 @@ t.get('board', 'shared', 'list', [])
 
 // We need to call initialize to get all of our capability handles set up and registered with Trello
 TrelloPowerUp.initialize({
-    'card-buttons': function () {
+    'card-buttons': function (t) {
         let arr1 = [{
             // usually you will provide a callback function to be run on button click
             // we recommend that you use a popup on click generally
