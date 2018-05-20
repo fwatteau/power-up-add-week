@@ -144,8 +144,7 @@ TrelloPowerUp.initialize({
             callback: cardButtonOneMonthCallback
         }];
 
-        // return [...arr1, ...arr2];
-        return arr1;
+        return [...arr1, ...arr2];
     },
     'show-settings': function(t){
         // when a user clicks the gear icon by your Power-Up in the Power-Ups menu
