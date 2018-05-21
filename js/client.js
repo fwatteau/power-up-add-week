@@ -132,7 +132,8 @@ TrelloPowerUp.initialize({
                     const l = lists.filter(myList => myList.id === listDej);
                     if (l.length) {
                         l[0].cards.forEach(function(card) {
-                            if (card.due > moment.valueOf()) {
+                            const d = moment(card.due);
+                            if (d.isAfter()) {
                                 console.log("Echéance à venir pour la carte " + card.name);
                             } else {
                                 console.warn("Echéance passée pour la carte " + card.name);
