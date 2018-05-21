@@ -155,7 +155,7 @@ TrelloPowerUp.initialize({
                             callback: function (t, opts) {
                                 cardButtonCallback(t, opts, 1, savedList)
                                     .then(function() {
-                                        t.lists('cards')
+                                        t.lists('id', 'cards')
                                             .then(function (lists) {
                                                 const l = lists.filter(myList => myList.id === list.id);
                                                 if (l.cards.length) {
