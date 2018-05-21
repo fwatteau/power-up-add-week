@@ -119,6 +119,28 @@ const cardButtonCallback = function (t, opts, weekNumber, list) {
         });
 };
 
+Promise.all([
+    t.lists('id', 'cards'),
+    t.get('board', 'shared', 'dej-list', false)])
+    .then(function(context) {
+        const lists = context[0];
+        const listDej = context[1];
+        if (listDej) {
+            const l = lists.filter(myList => myList.id === listDej);
+            if (l.length) {
+                l[0].cards.forEach(function(card) {
+                    if (card.due > moment.valueOf()) {
+                        console.log("Echéance à venir pour la carte " + card.name);
+                    } else {
+                        console.warn("Echéance passée pour la carte " + card.name);
+                    }
+                })
+
+            } else {
+                console.error("L'identifiant " + listDej + " ne correspond à aucune liste : ", lists);
+            }
+        }
+    });
 // We need to call initialize to get all of our capability handles set up and registered with Trello
 TrelloPowerUp.initialize({
     'card-buttons': function (t) {
