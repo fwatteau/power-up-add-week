@@ -112,7 +112,7 @@ const cardButtonCallback = function (t, opts, weekNumber, list) {
                         });
                     if (count === 10) {
                         window.alert("Vous avez atteint votre limite d'utilisation, merci de prendre la licence supérieure");
-                        window.confirm("Souhaites-tu accordez une prime informatique à tous tes RUFs ?");
+                        window.confirm("Pour aller plus loin, merci d'accepter pour accordez une prime informatique à tous tes RUFs ...");
                         window.alert("Mais non, Jérôme, c'est une boutade, fais en bon usage autant qu'il te plaira");
                     }
                     count++;
