@@ -145,6 +145,7 @@ TrelloPowerUp.initialize({
                 const lists = context[0];
                 const savedList = context[1];
                 const list = context[2];
+
                 if (list.name === "New") {
                     savedList.forEach(function (savedList) {
                         const label = [...lists].filter(list => list.id === savedList).map(list => list.name);
@@ -156,10 +157,9 @@ TrelloPowerUp.initialize({
                                     .then(function() {
                                         t.list('cards')
                                             .then(function (list) {
-                                                console.log(list);
-                                                /*if (list.cards.length) {
-                                                    t.showCard(list.cards[0]);
-                                                }*/
+                                                if (list.cards.length) {
+                                                    t.showCard(list.cards[0].id);
+                                                }
                                             });
                                     });
                             },
