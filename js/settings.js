@@ -8,8 +8,8 @@ const dejListSelector = document.getElementById('list-dej');
 t.lists('id', 'name')
   .then(function (lists) {
       return Promise.all([
-          t.get('board', 'shared', 'list'),
-          t.get('board', 'shared', 'dej-list')
+          t.get('board', 'shared', 'list', []),
+          t.get('board', 'shared', 'dej-list', false)
       ]).then(function (context) {
           const savedLists = context[0];
           const dejList = context[1];
@@ -19,7 +19,7 @@ t.lists('id', 'name')
               opt.innerHTML = list.name;
               opt.selected = savedLists.includes(list.id);
               listSelector.appendChild(opt);
-              opt.selected = dejList === list.id;
+              opt.selected = (dejList === list.id);
               dejListSelector.appendChild(opt);
           });
           t.sizeTo('#content')
