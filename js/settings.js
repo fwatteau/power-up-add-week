@@ -19,7 +19,7 @@ t.lists('id', 'name')
               opt.innerHTML = list.name;
               opt.selected = savedLists.includes(list.id);
               listSelector.appendChild(opt);
-              const newOpt = opt.cloneNode();
+              const newOpt = opt.cloneNode(true);
               newOpt.selected = (dejList === list.id);
               dejListSelector.appendChild(newOpt);
           });
