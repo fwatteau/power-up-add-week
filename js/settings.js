@@ -35,10 +35,14 @@ document.getElementById('save').addEventListener('click', function(){
   if (dejListSelector.selectedIndex) {
       const selectedList = dejListSelector.options[dejListSelector.selectedIndex];
       value = selectedList.value;
+
   }
 
-  return Promise.all([t.set('board', 'shared', 'dej-list', value), t.set('board', 'shared', 'list', values)])
+  return t.set('board', 'shared', 'list', values)
     .then(function(){
-      t.closePopup();
+        return t.set('board', 'shared', 'dej-list', value)
+            .then(function(){
+                t.closePopup();
+            })
     })
 });
