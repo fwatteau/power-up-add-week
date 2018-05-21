@@ -158,8 +158,8 @@ TrelloPowerUp.initialize({
                                         t.lists('id', 'cards')
                                             .then(function (lists) {
                                                 const l = lists.filter(myList => myList.id === list.id);
-                                                if (l.cards.length) {
-                                                    t.showCard(l.cards[0].id);
+                                                if (l.length && l[0].cards.length) {
+                                                    t.showCard(l[0].cards[0].id);
                                                 } else {
                                                     window.alert("Good job, vous êtes trop forts !");
                                                 }
