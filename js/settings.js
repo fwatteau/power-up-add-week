@@ -32,7 +32,7 @@ document.getElementById('save').addEventListener('click', function(){
   const values = [...listSelector.options].filter(option => option.selected).map(option => option.value);
   if (dejListSelector.selectedIndex) {
       const selectedList = dejListSelector.options[dejListSelector.selectedIndex];
-      t.set('board', 'shared', 'dej-list', selectedList);
+      t.set('board', 'shared', 'dej-list', selectedList.value);
   } else {
       t.remove('board', 'shared', 'dej-list');
   }
