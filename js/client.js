@@ -155,10 +155,13 @@ TrelloPowerUp.initialize({
                             callback: function (t, opts) {
                                 cardButtonCallback(t, opts, 1, savedList)
                                     .then(function() {
-                                        t.list('cards')
-                                            .then(function (list) {
-                                                if (list.cards.length) {
-                                                    t.showCard(list.cards[0].id);
+                                        t.lists('cards')
+                                            .then(function (lists) {
+                                                const l = lists.filter(myList => myList.id === list.id);
+                                                if (l.cards.length) {
+                                                    t.showCard(l.cards[0].id);
+                                                } else {
+                                                    window.alert("Good job, vous êtes trop forts !");
                                                 }
                                             });
                                     });
