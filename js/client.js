@@ -2,7 +2,6 @@
 
 // we can access Bluebird Promises as follows
 // var Promise = TrelloPowerUp.Promise;
-const t = TrelloPowerUp.iframe();
 /*
 
 Trello Data Access
@@ -78,6 +77,7 @@ t.getAll();
 
 const CALENDAR_ICON = './images/icon-calendar.svg';
 const GO_ICON = 'https://butlerfortrello.com/powerup/1526409456/img/powerup-gray/thumbs-up.svg?color=999';
+const t = TrelloPowerUp.iframe();
 let count = 0;
 
 const cardButtonOneWeekCallback = function (t, opts) {
@@ -118,7 +118,7 @@ const cardButtonCallback = function (t, opts, weekNumber, list) {
                 });
         });
 };
-
+/*
 Promise.all([
     t.lists('id', 'cards'),
     t.get('board', 'shared', 'dej-list', false)])
@@ -140,7 +140,7 @@ Promise.all([
                 console.error("L'identifiant " + listDej + " ne correspond à aucune liste : ", lists);
             }
         }
-    });
+    });*/
 // We need to call initialize to get all of our capability handles set up and registered with Trello
 TrelloPowerUp.initialize({
     'card-buttons': function (t) {
