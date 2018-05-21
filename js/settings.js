@@ -19,7 +19,8 @@ t.lists('id', 'name')
               opt.innerHTML = list.name;
               opt.selected = savedLists.includes(list.id);
               listSelector.appendChild(opt);
-              const newOpt = {...opt, selected: (dejList === list.id)};
+              const newOpt = opt.cloneNode();
+              newOpt.selected = (dejList === list.id);
               dejListSelector.appendChild(newOpt);
           });
           t.sizeTo('#content')
