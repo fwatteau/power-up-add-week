@@ -130,16 +130,19 @@ TrelloPowerUp.initialize({
                 const listDej = context[1];
                 if (listDej) {
                     const l = lists.filter(myList => myList.id === listDej);
+                    const allCards = [];
+                    let maxTime = moment();
                     if (l.length) {
                         l[0].cards.forEach(function(card) {
                             const d = moment(card.due);
-                            if (d.isAfter()) {
-                                console.log("Echéance à venir pour la carte " + card.name);
-                            } else {
-                                console.warn("Echéance passée pour la carte " + card.name);
+                            if (d.isBefore()) {
+                                allCards.push(card);
                             }
-                        })
-
+                            if (maxTime.isBefore(d)) {
+                                maxTime = d;
+                            }
+                        });
+                        console.log(allCards, maxTime);
                     } else {
                         console.error("L'identifiant " + listDej + " ne correspond à aucune liste : ", lists);
                     }
