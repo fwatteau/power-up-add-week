@@ -30,14 +30,13 @@ t.lists('id', 'name')
 
 document.getElementById('save').addEventListener('click', function(){
   const values = [...listSelector.options].filter(option => option.selected).map(option => option.value);
+  let promise = t.remove('board', 'shared', 'dej-list');
   if (dejListSelector.selectedIndex) {
       const selectedList = dejListSelector.options[dejListSelector.selectedIndex];
-      t.set('board', 'shared', 'dej-list', selectedList.value);
-  } else {
-      t.remove('board', 'shared', 'dej-list');
+      promise = t.set('board', 'shared', 'dej-list', selectedList.value);
   }
 
-  return t.set('board', 'shared', 'list', values)
+  return Promise.all([promise, t.set('board', 'shared', 'list', values)])
     .then(function(){
       t.closePopup();
     })
