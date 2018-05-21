@@ -143,6 +143,24 @@ TrelloPowerUp.initialize({
                             }
                         });
                         console.log(allCards, maxTime);
+
+                        t.get('member', 'private', 'token')
+                            .then(function (token) {
+                            allCards.forEach(function(card) {
+                                // Next Friday
+                                maxTime = maxTime.day(5 + 7);
+
+                                const xmlhttp = new XMLHttpRequest();   // new HttpRequest instance
+                                xmlhttp.open("PUT", 'https://trello.com/1/cards/' + card.id);
+                                xmlhttp.setRequestHeader("Content-Type", "application/json");
+                                xmlhttp.send(JSON.stringify({
+                                    token: token,
+                                    due: maxTime.valueOf(),
+                                    pos: 'bottom',
+                                    key: TRELLO_API_KEY
+                                }));
+                            });
+                        });
                     } else {
                         console.error("L'identifiant " + listDej + " ne correspond à aucune liste : ", lists);
                     }
