@@ -77,7 +77,6 @@ t.getAll();
 
 const CALENDAR_ICON = './images/icon-calendar.svg';
 const GO_ICON = 'https://butlerfortrello.com/powerup/1526409456/img/powerup-gray/thumbs-up.svg?color=999';
-let t = window.TrelloPowerUp.iframe();
 let count = 0;
 
 const cardButtonOneWeekCallback = function (t, opts) {
