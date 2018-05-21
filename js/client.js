@@ -79,20 +79,19 @@ t.getAll();
 const CALENDAR_ICON = './images/icon-calendar.svg';
 const GO_ICON = 'https://butlerfortrello.com/powerup/1526409456/img/powerup-gray/thumbs-up.svg?color=999';
 let count = 0;
-let arr2 = [];
 
 const cardButtonOneWeekCallback = function (t, opts) {
-    cardButtonCallback(t, opts, 1);
+    return cardButtonCallback(t, opts, 1);
 };
 
 const cardButtonOneMonthCallback = function (t, opts) {
-    cardButtonCallback(t, opts, 4);
+    return cardButtonCallback(t, opts, 4);
 };
 
 const cardButtonCallback = function (t, opts, weekNumber, list) {
     const nextFriday = moment().day(5 + weekNumber * 7).hour(9).minute(0);
 
-    t.card('id', 'idList')
+    return t.card('id', 'idList')
         .then(function (card) {
             t.get('member', 'private', 'token')
                 .then(function (token) {
@@ -153,7 +152,16 @@ TrelloPowerUp.initialize({
                             icon: GO_ICON, // don't use a colored icon here
                             text: 'Moov ' + label[0],
                             callback: function (t, opts) {
-                                cardButtonCallback(t, opts, 1, savedList);
+                                cardButtonCallback(t, opts, 1, savedList)
+                                    .then(function() {
+                                        t.list('cards')
+                                            .then(function (list) {
+                                                console.log(list);
+                                                /*if (list.cards.length) {
+                                                    t.showCard(list.cards[0]);
+                                                }*/
+                                            });
+                                    });
                             },
                             list: savedList
                         });
