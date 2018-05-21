@@ -1,7 +1,7 @@
 /* global TrelloPowerUp */
 
 // we can access Bluebird Promises as follows
-var Promise = TrelloPowerUp.Promise;
+// var Promise = TrelloPowerUp.Promise;
 const t = TrelloPowerUp.iframe();
 /*
 
