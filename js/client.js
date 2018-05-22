@@ -88,15 +88,6 @@ const cardButtonOneMonthCallback = function (t, opts) {
 };
 
 const cardButtonCallback = function (t, opts, weekNumber, list) {
-    const classNames = ["js-checklist-list", "js-attachments-section", "js-trello-attachments-section"];
-    // Reorder divs element
-    classNames.forEach(function (className) {
-        document.getElementsByClassName(className).forEach(function(div) {
-            // Move to bottom
-            div.parentElement.appendChild(div);
-        });
-    });
-
     const nextFriday = moment().day(5 + (weekNumber - 1) * 7).hour(9).minute(0);
 
     return t.card('id', 'idList')
@@ -187,6 +178,15 @@ TrelloPowerUp.initialize({
             callback: cardButtonOneMonthCallback
         }];
 
+        const classNames = ["js-checklist-list", "js-attachments-section", "js-trello-attachments-section"];
+        // Reorder divs element
+        classNames.forEach(function (className) {
+            document.getElementsByClassName(className).forEach(function(div) {
+                // Move to bottom
+                div.parentElement.appendChild(div);
+            });
+        });
+
         return Promise.all([
             t.lists('id', 'name'),
             t.get('board', 'shared', 'list', []),
@@ -204,7 +204,7 @@ TrelloPowerUp.initialize({
                             icon: GO_ICON, // don't use a colored icon here
                             text: 'Moov ' + label[0],
                             callback: function (t, opts) {
-                                cardButtonCallback(t, opts, 1, savedList)
+                                return cardButtonCallback(t, opts, 1, savedList)
                                     .then(function() {
                                         t.lists('id', 'cards')
                                             .then(function (lists) {
