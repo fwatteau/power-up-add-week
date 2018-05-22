@@ -88,7 +88,16 @@ const cardButtonOneMonthCallback = function (t, opts) {
 };
 
 const cardButtonCallback = function (t, opts, weekNumber, list) {
-    const nextFriday = moment().day(5 + weekNumber * 7).hour(9).minute(0);
+    const classNames = ["js-checklist-list", "js-attachments-section", "js-trello-attachments-section"];
+    // Reorder divs element
+    classNames.forEach(function (className) {
+        document.getElementsByClassName(className).forEach(function(div) {
+            // Move to bottom
+            div.parentElement.appendChild(div);
+        });
+    });
+
+    const nextFriday = moment().day(5 + (weekNumber - 1) * 7).hour(9).minute(0);
 
     return t.card('id', 'idList')
         .then(function (card) {
@@ -108,11 +117,7 @@ const cardButtonCallback = function (t, opts, weekNumber, list) {
                         .then(function(moov) {
                             t.set(card.id, 'shared', 'mel-moov', moov + 1);
                         });
-                    if (count === 10) {
-                        window.alert("Vous avez atteint votre limite d'utilisation, merci de prendre la licence supérieure");
-                        window.confirm("Pour aller plus loin, merci d'accepter pour accordez une prime informatique à tous tes RUFs ...");
-                        window.alert("Mais non, Jérôme, c'est une boutade, fais en bon usage autant qu'il te plaira");
-                    }
+
                     count++;
                 });
         });
@@ -142,7 +147,6 @@ TrelloPowerUp.initialize({
                                 maxTime = d;
                             }
                         });
-                        console.log(allCards, maxTime);
 
                         t.get('member', 'private', 'token')
                             .then(function (token) {
