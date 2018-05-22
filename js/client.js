@@ -181,7 +181,8 @@ TrelloPowerUp.initialize({
         const classNames = ["js-checklist-list", "js-attachments-section", "js-trello-attachments-section"];
         // Reorder divs element
         classNames.forEach(function (className) {
-            document.getElementsByClassName(className).forEach(function(div) {
+            const arr = Array.from(document.getElementsByClassName(className));
+            arr.forEach(function(div) {
                 // Move to bottom
                 div.parentElement.appendChild(div);
             });
