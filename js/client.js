@@ -178,16 +178,6 @@ TrelloPowerUp.initialize({
             callback: cardButtonOneMonthCallback
         }];
 
-        const classNames = ["js-checklist-list", "js-attachments-section", "js-trello-attachments-section"];
-        // Reorder divs element
-        classNames.forEach(function (className) {
-            const arr = Array.from(document.getElementsByClassName(className));
-            arr.forEach(function(div) {
-                // Move to bottom
-                div.parentElement.appendChild(div);
-            });
-        });
-
         return Promise.all([
             t.lists('id', 'name'),
             t.get('board', 'shared', 'list', []),
@@ -207,7 +197,7 @@ TrelloPowerUp.initialize({
                             callback: function (t, opts) {
                                 return cardButtonCallback(t, opts, 1, savedList)
                                     .then(function() {
-                                        t.lists('id', 'cards')
+                                        return t.lists('id', 'cards')
                                             .then(function (lists) {
                                                 const l = lists.filter(myList => myList.id === list.id);
                                                 if (l.length && l[0].cards.length) {
