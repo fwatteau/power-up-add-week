@@ -35,7 +35,6 @@ document.getElementById('save').addEventListener('click', function(){
   if (dejListSelector.selectedIndex) {
       const selectedList = dejListSelector.options[dejListSelector.selectedIndex];
       value = selectedList.value;
-
   }
 
   return t.set('board', 'shared', 'list', values)
