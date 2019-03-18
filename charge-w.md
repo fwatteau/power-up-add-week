@@ -38,9 +38,8 @@
    systématiquement toutes les réunions dès que j'ai plus de 60% du
    temps alloué. (Pas de priorité, le premier arrivé, premier servi) 
    
- - On arrête les sujets de haute voltige (Jean-Moulin & co) à pure perte de
-   temps.
+ - On arrête les sujets de haute voltige (Jean-Moulin, nouvelles instances de réflexion, nouvelles saisie pour faire le point & co) à pure perte de temps.
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTQ5MTAzNjY2Nl19
+eyJoaXN0b3J5IjpbMTI4MjUwMjA2OSwtNDkxMDM2NjY2XX0=
 -->
